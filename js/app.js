@@ -51,7 +51,7 @@ cash.onclick = function() {
   // balanceTxt = balanceTxt.substr(1, balanceTxt.length).replace(/,/g, '')
 
   Swal.fire({
-    title: "Warning! Clears your history!!",
+    title: "Chnage will clear your history",
     input: 'number',
     inputValue: '',
     showCancelButton: true,
@@ -258,7 +258,7 @@ if (!hash) {
     "container_id": "tradingview_0b60e"
   })
   watchTicker()
-  alert("As of Monday, June 20st, 2022 The Crypto Paper Trader's are no longer under development. Why? The Public API no longer works and I don't have the time to update this project therefore I'm abandoning it. However you can still view it, use it, fork it and do whatever you wish to it.");
+  // alert("As of Monday, June 20st, 2022 The Crypto Paper Trader's are no longer under development. Why? The Public API no longer works and I don't have the time to update this project therefore I'm abandoning it. However you can still view it, use it, fork it and do whatever you wish to it.");
 }
 
 // add hash from change and reload
@@ -314,6 +314,10 @@ function buildPL() {
   activePL = parseFloat(parseFloat(gainorLoss) * parseFloat(priceTimes))
   var gainrLoss = parseFloat(activePL).toFixed(2)
 
+
+  // Determine the background color class based on the price value
+  var priceClass = gainrLoss >= 0 ? 'positive-price' : 'negative-price';
+
   // active position
   leverageElm.disabled = true
   cash.disabled = true
@@ -325,7 +329,7 @@ function buildPL() {
   closedPrice = priceOrder.value
   $("[data-trade=symbol]").text($('#coin option:selected').val())
   $("[data-trade=price]").text(closedPrice)
-  $("[data-pl=open]").text(gainrLoss)
+  $("[data-pl=open]").text(gainrLoss).removeClass('positive-price negative-price').addClass(priceClass); 
 }
 function watchPL() {
   $("[data-clone=position]").show()
@@ -345,6 +349,13 @@ function stopPL() {
   
   cash.disabled = false
   coin.disabled = false
+
+  var priceText = $("[data-trade=price]").text();
+    var priceValue = parseFloat(priceText);
+
+    // Determine the background color class based on the price value
+    var priceClass = priceValue >= 0 ? 'positive-price' : 'negative-price';
+
   $('#cash').removeClass('noclick')
   $("[data-output=position]").prepend('<tr><td>'+ $("[data-trade=symbol]").text() +'</td><td>'+ $("[data-trade=price]").text() +'</td><td>0.00</td><td>'+ gainorLoss +'</td></tr>').show()
   $("[data-clone=position]").hide()
@@ -387,17 +398,17 @@ function WinLossPerc() {
 
   // if balance is greator than 50% show green
   if (parseFloat(parseFloat(parseFloat(tradeWins.length) / parseFloat(trades.length)) * 100).toFixed(0) > 50) {
-    calcperc.style.color = '#26a69a';
+    calcperc.style.color = '#f7a600';
   }
 
   // if balance is less than 50% show red
   if (parseFloat(parseFloat(parseFloat(tradeWins.length) / parseFloat(trades.length)) * 100).toFixed(0) < 50) {
-    calcperc.style.color = '#ef5350';
+    calcperc.style.color = '#f7a600';
   }
 
   // if balance is equal to 50% show white
   if (parseFloat(parseFloat(parseFloat(tradeWins.length) / parseFloat(trades.length)) * 100).toFixed(0) === 50) {
-    calcperc.style.color = '#fff';
+    calcperc.style.color = '#f7a600';
   }
 
   // show percentage

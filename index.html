@@ -1,163 +1,252 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <title>Day Trader Simulator</title>
-    <meta charset="utf-8">
-    <meta name="viewport" content="initial-scale=1.0">
-    <meta name="description" content="Day trade crypto with out risking any money! Test your trading methodology with the Crypto Paper Trader Day Trader Simulator to see if your win percentages average out over a series of trades this way you'll know if you'll be a consistent profitable trader.">
-    <meta name="author" content="Michael Schwartz">
-    <meta http-equiv="X-UA-Compatible" content="IE=9" />
-    <link rel="apple-touch-icon" href="logo.png">
-    <link rel="icon" type="image/vnd.microsoft.icon" href="favicon.ico">
-    <link rel="shortcut icon" href="logo.png" type="image/x-icon">
-    <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css2?family=Krub:wght@200&display=swap" rel="stylesheet">
-    <link href="css/normalize.css" rel="stylesheet" />
-    <link href="libraries/sweetalert2/sweetalert2.min.css" rel="stylesheet" />
-    <link href="libraries/jqxwidgets/styles/jqx.base.css" rel="stylesheet" />
-    <link href="libraries/jqxwidgets/styles/metromod.css" rel="stylesheet" />
-    <link href="libraries/jqxwidgets/styles/metrodarkmod.css" rel="stylesheet" />
-    <link href="css/style.css" rel="stylesheet" />
+<html lang="en">
 
-    <meta property="og:url"         content="https://michaelsboost.com/crypto" />
-    <meta property="og:type"        content="website" />
-    <meta property="og:title"       content="Day Trader Simulator: Day trade crypto with out risking any money!" />
-    <meta property="og:description" content="Day trade crypto with out risking any money! Test your trading methodology with the Crypto Paper Trader Day Trader Simulator to see if your win percentages average out over a series of trades this way you'll know if you'll be a consistent profitable trader." />
-    <meta property="og:image"       content="https://raw.githubusercontent.com/michaelsboost/Crypto-Paper-Trader/gh-pages/header.png" />
-  </head>
-  <body>
-    <div id="mainSplitter">
-      <div>
-        <div id="leftSplitter">
-          <div>
-            <div id="midSplitter">
-              <div>
-                <div class="fill-container">
-                  <div class="fill">
-                    <h3 class="ib">Balance/Leverage</h3>
-                    
-                    <select id="leverage" class="leverage ib fr" style="margin: 8px 6px 0 0; position: relative; z-index: 1;">
-                      <option value="1">none</option>
-                      <option value="2">2x</option>
-                      <option value="3">3x</option>
-                      <option value="4">4x</option>
-                      <option value="5">5x</option>
-                      <option value="6">6x</option>
-                      <option value="8">8x</option>
-                      <option value="10">10x</option>
-                      <option value="25">25x</option>
-                      <option value="30">30x</option>
-                      <option value="50">50x</option>
-                      <option value="100">100x</option>
-                      <option value="200">200x</option>
-                      <option value="300">300x</option>
-                      <option value="1000">1,000x</option>
-                    </select>
-                  </div>
-                  <button id="cash" class="krub cash">$1,000.00</button>
-                </div>
-              </div>
-              <div>
-                <div class="fill-container">
-                  <h3>Order History</h3>
-                  
-                  <table>
-                    <tbody data-column="orderhistory">
-                      <tr>
-                        <td>Time</td>
-                        <td>Symbol</td>
-                        <td>Price</td>
-                        <td>Order Type</td>
-                      </tr>
-                      <tr data-output="orderhistory"></tr>
-                    </tbody>
-                  </table>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div>
-            <div class="fill-container">
-              <div class="fill">
-                <h3 class="ib">Positions</h3>
-                <h3 id="calcperc" class="ib fr" style="display: none;">100% &nbsp;</h3>
-              </div>
-              
-              <table>
-                <tbody data-column="position">
-                  <tr>
-                    <td>Symbol</td>
-                    <td>Price</td>
-                    <td>Open P&L</td>
-                    <td>Closed P&L</td>
-                  </tr>
-                  <tr data-clone="position">
-                    <td data-trade="symbol"></td>
-                    <td data-trade="price"></td>
-                    <td data-pl="open"></td>
-                    <td data-pl="closed"></td>
-                  </tr>
-                  <tr data-output="position" style="display: none;"></tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Day Trader Simulator</title>
+  <link rel="apple-touch-icon" href="logo.png">
+  <link rel="icon" type="image/vnd.microsoft.icon" href="favicon.ico">
+  <link rel="shortcut icon" href="logo.png" type="image/x-icon">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&display=swap"
+    rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <link href="libraries/sweetalert2/sweetalert2.min.css" rel="stylesheet" />
+  <link href="css/normalize.css" rel="stylesheet" />
+
+
+ 
+</head>
+
+<body>
+  <div class="header">
+    <div class="logo">Blockverse</div>
+    <div class="nav-links">
+      <a href="#">Exchange</a>
+      <a href="#">WEB3</a>
+      <a href="#">Buy Crypto</a>
+      <div class="dropdown">
+        <a href="#">Markets</a>
+        <div class="dropdown-content">
+          <a href="#">Spot Markets</a>
+          <a href="#">Futures Markets</a>
+          <a href="#">Margin Trading</a>
         </div>
       </div>
-      <div>
-        <div id="rightSplitter">
-          <div>
-            <div id="tradingview_0b60e" class="fill-container tradingview-widget-container">
-              <!-- TradingView Widget BEGIN -->
-              <script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
-              <!-- TradingView Widget END -->
-            </div>
-          </div>
-          <div>
-            <div class="fill-container orderentry">
-              <a class="github" href="https://github.com/michaelsboost/DayTraderSim" target="_blank"><svg viewBox="0 0 480 512"><path fill="#4E4F50" d="M186.1 328.7c0 20.9-10.9 55.1-36.7 55.1s-36.7-34.2-36.7-55.1 10.9-55.1 36.7-55.1 36.7 34.2 36.7 55.1zM480 278.2c0 31.9-3.2 65.7-17.5 95-37.9 76.6-142.1 74.8-216.7 74.8-75.8 0-186.2 2.7-225.6-74.8-14.6-29-20.2-63.1-20.2-95 0-41.9 13.9-81.5 41.5-113.6-5.2-15.8-7.7-32.4-7.7-48.8 0-21.5 4.9-32.3 14.6-51.8 45.3 0 74.3 9 108.8 36 29-6.9 58.8-10 88.7-10 27 0 54.2 2.9 80.4 9.2 34-26.7 63-35.2 107.8-35.2 9.8 19.5 14.6 30.3 14.6 51.8 0 16.4-2.6 32.7-7.7 48.2 27.5 32.4 39 72.3 39 114.2zm-64.3 50.5c0-43.9-26.7-82.6-73.5-82.6-18.9 0-37 3.4-56 6-14.9 2.3-29.8 3.2-45.1 3.2-15.2 0-30.1-.9-45.1-3.2-18.7-2.6-37-6-56-6-46.8 0-73.5 38.7-73.5 82.6 0 87.8 80.4 101.3 150.4 101.3h48.2c70.3 0 150.6-13.4 150.6-101.3zm-82.6-55.1c-25.8 0-36.7 34.2-36.7 55.1s10.9 55.1 36.7 55.1 36.7-34.2 36.7-55.1-10.9-55.1-36.7-55.1z"></path></svg></a>
-              <a class="donate" href="https://michaelsboost.com/donate" target="_blank"><svg viewBox="0 0 512 512"><path fill="#Ef5350" d="M462.3 62.6C407.5 15.9 326 24.3 275.7 76.2L256 96.5l-19.7-20.3C186.1 24.3 104.5 15.9 49.7 62.6c-62.8 53.6-66.1 149.8-9.9 207.9l193.5 199.8c12.5 12.9 32.8 12.9 45.3 0l193.5-199.8c56.3-58.1 53-154.3-9.8-207.9z"></path></svg></a>
-
-              <div class="table">
-                <div class="cell">
-                  <select id="coin" class="krub">
-                    <option value="BTCUSDT">BTC/USDT</option>
-                    <option value="ETHUSDT">ETH/USDT</option>
-                    <option value="BCHUSDT">BCH/USDT</option>
-                    <option value="SOLUSDT" selected>SOL/USDT</option>
-                    <option value="XRPUSDT">XRP/USDT</option>
-                    <option value="WAVESUSDT">WAVES/USDT</option>
-                    <option value="ADAUSDT">ADA/USDT</option>
-                    <option value="TRXUSDT">TRX/USDT</option>
-                    <option value="AVAXUSDT">AVAX/USDT</option>
-                    <option value="LTCUSDT">LTC/USDT</option>
-                    <option value="DOTUSDT">DOT/USDT</option>
-                    <option value="DOGEUSDT">DOGE/USDT</option>
-                  </select>
-                </div>
-                <div class="cell">
-                  <input id="priceorder" class="krub" type="number" placeholder="179.44" min="0" style="outline: none;" disabled>
-                </div>
-              </div>
-              <div class="table">
-                <div class="cell">
-                  <button id="sell" class="krub">sell</button>
-                </div>
-                <div class="cell">
-                  <button id="buy"  class="krub">buy</button>
-                </div>
-              </div>
-            </div>
-          </div>
+      <div class="dropdown">
+        <a href="#">Trade</a>
+        <div class="dropdown-content">
+          <a href="#">Spot Trading</a>
+          <a href="#">Margin Trading</a>
+          <a href="#">P2P Trading</a>
         </div>
       </div>
+      <div class="dropdown">
+        <a href="#">Tools</a>
+        <div class="dropdown-content">
+          <a href="#">Trading Tools</a>
+          <a href="#">API</a>
+          <a href="#">Bot Trading</a>
+        </div>
+      </div>
+      <a href="#">Finance</a>
+      <a href="#">Derivatives Info</a>
+    </div>
+    <div class="cta">
+      <div class="search-bar">
+        <button>
+          <svg width="30px" height="30px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <g id="SVGRepo_bgCarrier" stroke-width="0" />
+            <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round" />
+            <g id="SVGRepo_iconCarrier">
+              <path fill-rule="evenodd" clip-rule="evenodd"
+                d="M11.567 9.8895C12.2495 8.90124 12.114 7.5637 11.247 6.7325C10.3679 5.88806 9.02339 5.75928 7.99998 6.4215C7.57983 6.69308 7.25013 7.0837 7.05298 7.5435C6.85867 7.99881 6.80774 8.50252 6.90698 8.9875C7.00665 9.47472 7.25054 9.92071 7.60698 10.2675C7.97021 10.6186 8.42786 10.8563 8.92398 10.9515C9.42353 11.049 9.94062 11.0001 10.413 10.8105C10.8798 10.6237 11.2812 10.3033 11.567 9.8895Z"
+                stroke="#ff5c5c" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+              <path fill-rule="evenodd" clip-rule="evenodd"
+                d="M12.433 17.8895C11.7504 16.9012 11.886 15.5637 12.753 14.7325C13.6321 13.8881 14.9766 13.7593 16 14.4215C16.4202 14.6931 16.7498 15.0837 16.947 15.5435C17.1413 15.9988 17.1922 16.5025 17.093 16.9875C16.9933 17.4747 16.7494 17.9207 16.393 18.2675C16.0298 18.6186 15.5721 18.8563 15.076 18.9515C14.5773 19.0481 14.0614 18.9988 13.59 18.8095C13.1222 18.6234 12.7197 18.3034 12.433 17.8895V17.8895Z"
+                stroke="#ff5c5c" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+              <path
+                d="M12 7.75049C11.5858 7.75049 11.25 8.08627 11.25 8.50049C11.25 8.9147 11.5858 9.25049 12 9.25049C12.4142 9.25049 12.75 8.9147 12.75 8.50049C12.75 8.08627 12.4142 7.75049 12 7.75049"
+                stroke="#ffb11a" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+              <path
+                d="M14 16.7505C13.5858 16.7505 13.25 17.0863 13.25 17.5005C13.25 17.9147 13.5858 18.2505 14 18.2505C14.4142 18.2505 14.75 17.9147 14.75 17.5005C14.75 17.0863 14.4142 16.7505 14 16.7505"
+                stroke="#ffb11a" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+              <path d="M9.01855 13.2686L14.9894 10.7295" stroke="#ffb11a" stroke-width="1.5" stroke-linecap="round"
+                stroke-linejoin="round" />
+              <path fill-rule="evenodd" clip-rule="evenodd"
+                d="M7.67055 4.44351C11.3334 2.74135 15.6667 2.74135 19.3296 4.44351L20.9614 5.17491C21.7334 5.52391 22.2306 6.29311 22.3078 7.13931C22.5427 9.67023 22.5427 12.3298 22.3078 14.8607C22.2306 15.7069 21.7334 16.4761 20.9614 16.8251L19.3296 17.5565C15.6667 19.2586 11.3334 19.2586 7.67055 17.5565L6.03871 16.8251C5.26668 16.4761 4.7695 15.7069 4.69234 14.8607C4.4574 12.3298 4.4574 9.67023 4.69234 7.13931C4.7695 6.29311 5.26668 5.52391 6.03871 5.17491L7.67055 4.44351ZM18.5945 5.74197C15.2728 4.20836 11.7272 4.20836 8.4055 5.74197L6.77365 6.47337C6.60414 6.54801 6.49011 6.70912 6.46897 6.89382C6.24453 8.96555 6.24453 11.0345 6.46897 13.1062C6.49011 13.2909 6.60414 13.452 6.77365 13.5266L8.4055 14.258C11.7272 15.7916 15.2728 15.7916 18.5945 14.258L20.2263 13.5266C20.3958 13.452 20.5098 13.2909 20.531 13.1062C20.7555 11.0345 20.7555 8.96555 20.531 6.89382C20.5098 6.70912 20.3958 6.54801 20.2263 6.47337L18.5945 5.74197Z"
+                stroke="#ffb11a" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+              <path d="M8.43872 13.1153L15.4772 10.3973" stroke="#ffb11a" stroke-width="1.5" stroke-linecap="round"
+                stroke-linejoin="round" />
+            </g>
+          </svg>
+        </button>
+        <input type="text" placeholder="Search">
+      </div>
+      <a href="login.html" class="btn  text-white !important">Log In</a>
+      <a href="register.html" class="btn reg btn-primary py-1 px-5">Register</a>
+    </div>
+  </div>
+
+  <div class="main-container">
+    <!-- Center Panel -->
+    <div class="panel">
+      <div id="tradingview_0b60e" class="tradingview-widget-container h-full"></div>
+      <script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
+      <script>
+        new TradingView.widget({
+          "width": "100%",
+          "height": 600,
+          "symbol": "BINANCE:" + document.querySelector('#coin option:selected').value,
+          "interval": "1",
+          "timezone": "America/Chicago",
+          "theme": "dark",
+          "style": "1",
+          "locale": "en",
+          "toolbar_bg": "#f1f3f6",
+          "enable_publishing": false,
+          "hide_side_toolbar": false,
+          "allow_symbol_change": false,
+          "hotlist": true,
+          "calendar": true,
+          "details": true,
+          "studies": ["VWAP@tv-basicstudies"],
+          "news": ["headlines"],
+          "container_id": "tradingview_0b60e"
+        });
+      </script>
     </div>
 
-    <script src="libraries/sweetalert2/sweetalert2.min.js"></script>
-    <script src="libraries/jquery/jquery.js"></script>
-    <script src="libraries/jqxwidgets/jqxcore.js"></script>
-    <script src="libraries/jqxwidgets/jqxsplitter.js"></script>
-    <script src="js/splitter.js"></script>
-    <script src="js/app.js"></script>
-  </body>
+    <!-- Right Panel -->
+    <div class="panel">
+      <h3 class="text-lg font-bold mb-2">Balance/Leverage</h3>
+      <select id="leverage" class="block w-full mb-4 bg-transparent p-2 border rounded text-white">
+        <option class="bg-gray-800" value="1">1x</option>
+        <option class="bg-gray-800" value="2">2x</option>
+        <option class="bg-gray-800" value="3">3x</option>
+        <option class="bg-gray-800" value="4">4x</option>
+        <option class="bg-gray-800" value="5">5x</option>
+        <option class="bg-gray-800" value="6">6x</option>
+        <option class="bg-gray-800" value="8">8x</option>
+        <option class="bg-gray-800" value="10">10x</option>
+        <option class="bg-gray-800" value="25">25x</option>
+        <option class="bg-gray-800" value="30">30x</option>
+        <option class="bg-gray-800" value="50">50x</option>
+        <option class="bg-gray-800" value="100">100x</option>
+        <option class="bg-gray-800" value="200">200x</option>
+        <option class="bg-gray-800" value="300">300x</option>
+        <option class="bg-gray-800" value="1000">1,000x</option>
+      </select>
+      <button id="cash" class="w-full btn btn-primary py-2 mb-4">$1,000.00</button>
+
+      <h3 class="text-lg font-bold mb-2">Order Entry</h3>
+      <div class="grid grid-cols-2 gap-2 mb-4">
+        <select id="coin" class="block w-full bg-transparent p-2 border text-white rounded">
+          <option class="bg-gray-800" value="BTCUSDT">BTC/USDT</option>
+          <option class="bg-gray-800" value="ETHUSDT">ETH/USDT</option>
+          <option class="bg-gray-800" value="BCHUSDT">BCH/USDT</option>
+          <option class="bg-gray-800" value="SOLUSDT" selected>SOL/USDT</option>
+          <option class="bg-gray-800" value="XRPUSDT">XRP/USDT</option>
+          <option class="bg-gray-800" value="WAVESUSDT">WAVES/USDT</option>
+          <option class="bg-gray-800" value="ADAUSDT">ADA/USDT</option>
+          <option class="bg-gray-800" value="TRXUSDT">TRX/USDT</option>
+          <option class="bg-gray-800" value="AVAXUSDT">AVAX/USDT</option>
+          <option class="bg-gray-800" value="LTCUSDT">LTC/USDT</option>
+          <option class="bg-gray-800" value="DOTUSDT">DOT/USDT</option>
+          <option class="bg-gray-800" value="DOGEUSDT">DOGE/USDT</option>
+        </select>
+        <input id="priceorder" type="number" placeholder="179.44" min="0"
+          class="block w-full p-2 border border-gray-300 rounded" disabled>
+      </div>
+      <div class="grid grid-cols-2 gap-2 mb-4">
+        <div class="cell"><button id="sell" class="w-full btn btn-danger py-1">Sell</button></div>
+        <div class="cell"> <button id="buy" class="w-full btn btn-primary py-1">Buy</button></div>
+      </div>
+
+      <h3 class="text-lg font-bold mb-2">Positions</h3>
+      <h3 id="calcperc" class="ib fr" style="display: none;">100% &nbsp;</h3>
+      <!-- <div class="table-container"> -->
+        <!-- <table>
+          <thead>
+            <tr>
+              <td>Symbol</td>
+              <td>Price</td>
+              <td>Open P&L</td>
+              <td>Closed P&L</td>
+            </tr>
+          </thead>
+          <tbody data-column="position">
+            <tr data-clone="position">
+              <td data-trade="symbol"></td>
+              <td data-trade="price"></td>
+              <td data-pl="open"></td>
+              <td data-pl="closed"></td>
+            </tr>
+            <tr data-output="position" style="display: none;"></tr>
+          </tbody>
+        </table> -->
+        
+        <div class="fill-container">
+          <div>
+            <div class="fill " >
+              
+            <h3 id="calcperc" class="ib fr" style="display: none;">100% &nbsp;</h3>
+          </div>
+          </div>
+          
+          <table >
+            <tbody data-column="position">
+              <tr>
+                <td>Symbol</td>
+                <td>Price</td>
+                <td>Open P&L</td>
+                <td>Closed P&L</td>
+              </tr>
+              <tr data-clone="position">
+                <td data-trade="symbol"></td>
+                <td data-trade="price"></td>
+                <td data-pl="open"></td>
+                <td data-pl="closed"></td>
+              </tr>
+              <tr data-output="position" style="display: none;"></tr>
+            </tbody>
+          </table>
+        </div>
+      <!-- </div> -->
+    </div>
+
+    <!-- Order History Panel -->
+    <div class="panel order-history mt-4">
+      <h3 class="text-lg font-bold mb-2">Order History</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>Time</th>
+            <th>Symbol</th>
+            <th>Price</th>
+            <th>Order Type</th>
+          </tr>
+        </thead>
+        <tbody data-output="orderhistory">
+          <!-- Order history rows will be prepended here -->
+        </tbody>
+      </table>
+
+    </div>
+  </div>
+
+  <div class="footer p-2 text-center">
+    <p>&copy; 2024 Day Trader Blockverse</p>
+  </div>
+
+  <script src="libraries/sweetalert2/sweetalert2.min.js"></script>
+  <script src="libraries/jquery/jquery.js"></script>
+  <script src="js/app.js"></script>
+
+
+</body>
+
 </html>
